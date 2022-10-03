@@ -3,7 +3,7 @@
 
 # Pre-existing Users Dictionary (Username, Password)
 
-
+# DICTIONARIES
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
     "title": "The Conjuring",
@@ -27,25 +27,31 @@ movies = [{
 }]
 
 # Favourites 
-favourites = [{}]
+favourites = [ ]
 
-
-# User System
+# FUNCTIONS
+def bubbleSort(anArray, item):
+    for i in range(len(anArray)):
+        for nums in range(0, len(anArray) - i - 1):
+            if anArray[nums][item] > anArray[nums + 1][item]:
+                temp = anArray[nums][item]
+                anArray[nums][item] = anArray[nums + 1][item]
+                anArray[nums + 1][item] = temp
 
 # Menu Option Functions
 def displayall():
     for movie in movies:
         print(movie["title"])
 
-def search(title):
-    for i in range (len(movies)):
-        if movies[i]["title"] == title:
+def search(anArray, title):
+    for i in range (len(anArray)):
+        if anArray[i]["title"] == title:
             return i
     return -1
 
 def searchmovie():
     searchMov = input("Please enter a movie you want to search up: ")
-    index = search(searchMov)
+    index = search(movies, searchMov)
     if index != -1:
         print("Title:",movies[index]["title"]) 
         print("Genre:",movies[index]["genre"]) 
@@ -53,17 +59,26 @@ def searchmovie():
     else:
         print("Movie not found")  
 
-def sorttitle(): # alphabetical order of genres 
-    pass
+def sortgenre(): # alphabetical order of genres 
+    bubbleSort(movies, "genre")
+    for movie in movies:
+        print(movie["genre"], ":", movie["title"])
 
 def addfav():
-    pass
+    favMovie = input("What movie would you like to add to your favourites? ")
+    favourites.append(movies[search(movies, favMovie)])
+    print("Movie added")
 
 def removefav():
-    pass
+    remfavMovie = input("What movie would you like to remove from your favourites? ")
+    index = search(favourites, remfavMovie)
+    favourites.pop(index)
+    print("Movie removed")
 
 def displayfav():
-    pass
+    print("\nFAVOURITES:")
+    for favourite in favourites:
+        print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
 
 def add():
     newtitle = input("What is the title of this movie? ")
@@ -95,12 +110,14 @@ def getMenuSelection():
     print(f"\n********MAIN MENU********")
     print("1. Display movies")
     print("2. Search data")
-    print("3. Sort by title")
+    print("3. Sort by genre")
     print("4. Add to favourite")
-    print("5. Display favourites")
-    print("6. Add new movie")
-    print("7. Remove a movie")
-    print("8. Exit")
+    print("5. Remove from favourites")
+    print("6. Display favourites")
+    print("7. Add new movie")
+    print("8. Remove a movie")
+    print("9. Exit")
+
     return input("\nChoose an option please: ").lower()
 
 # Main Menu
@@ -112,18 +129,21 @@ while loop:
         displayall()
     elif selection == "2" or selection == "search data":
         searchmovie()
-    elif selection == "3" or selection == "sort by title":
-        sorttitle()
-    elif selection == "4" or selection == "add to favourite":
+    elif selection == "3" or selection == "sort by genre":
+        sortgenre()
+    elif selection == "4" or selection == "add to favourites":
         addfav()
-    elif selection == "5" or selection == "remove from favourite":
+    elif selection == "5" or selection == "remove from favourites":
         removefav()
-    elif selection == "6" or selection == "remove from favourite":
+    elif selection == "6" or selection == "display favourites":
+        displayfav()
+    elif selection == "7" or selection == "add new movie":
         add()
-    elif selection == "7" or selection == "remove from favourite":
+    elif selection == "8" or selection == "remove a movie":
         remove()
-    elif selection == "8" or selection == "exit":
+    elif selection == "9" or selection == "exit":
         exit()
+        loop = False
     else: 
         print("Please choose an option. ")
 
