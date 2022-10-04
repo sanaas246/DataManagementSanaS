@@ -1,6 +1,4 @@
 # MOVIE DATA MANAGEMENT PROJECT - SANA S
-
-
 # Pre-existing Users Dictionary (Username, Password)
 
 # DICTIONARIES
@@ -26,28 +24,29 @@ movies = [{
     "director": "Kenneth Branagh"
 }]
 
-# Favourites 
+# Favourites (Title, Genre, Director)
 favourites = [ ]
 
 # FUNCTIONS
+# Random Functions to Help
 def bubbleSort(anArray, item):
     for i in range(len(anArray)):
         for nums in range(0, len(anArray) - i - 1):
             if anArray[nums][item] > anArray[nums + 1][item]:
-                temp = anArray[nums][item]
-                anArray[nums][item] = anArray[nums + 1][item]
-                anArray[nums + 1][item] = temp
-
-# Menu Option Functions
-def displayall():
-    for movie in movies:
-        print(movie["title"])
+                temp = anArray[nums]
+                anArray[nums] = anArray[nums + 1]
+                anArray[nums + 1] = temp
 
 def search(anArray, title):
     for i in range (len(anArray)):
         if anArray[i]["title"] == title:
             return i
     return -1
+
+# Menu Option Functions
+def displayall():
+    for movie in movies:
+        print(movie["title"])
 
 def searchmovie():
     searchMov = input("Please enter a movie you want to search up: ")
@@ -59,38 +58,26 @@ def searchmovie():
     else:
         print("Movie not found")  
 
-def sortgenre(): # alphabetical order of genres 
+def sortgenre(): 
     bubbleSort(movies, "genre")
     for movie in movies:
         print(movie["genre"], ":", movie["title"])
 
-def addfav():
-    favMovie = input("What movie would you like to add to your favourites? ")
-    favourites.append(movies[search(movies, favMovie)])
-    print("Movie added")
-
-def removefav():
-    remfavMovie = input("What movie would you like to remove from your favourites? ")
-    index = search(favourites, remfavMovie)
-    favourites.pop(index)
-    print("Movie removed")
-
-def displayfav():
-    print("\nFAVOURITES:")
-    for favourite in favourites:
-        print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
-
 def add():
     newtitle = input("What is the title of this movie? ")
-    newgenre = input("What is the genre for this movie? ")
-    newdir = input("What is the director for this movie? ")
-    print("Movie Added")
-    newMovie = {
-        "title": newtitle,
-        "genre": newgenre,
-        "director": newdir
-    }
-    movies.append(newMovie)
+    searching = search(movies, newtitle)
+    if searching != -1:
+        newgenre = input("What is the genre for this movie? ")
+        newdir = input("What is the director for this movie? ")
+        print("Movie Added")
+        newMovie = {
+            "title": newtitle,
+            "genre": newgenre,
+            "director": newdir
+        }
+        movies.append(newMovie)
+    else: 
+        print("Movie already in the list.")
 
 def remove():
     removemov = input("What is the name of the movie you would like to delete? ")
@@ -99,6 +86,30 @@ def remove():
         del movies[index]
     else:
         print("Movie not found")
+
+def addfav():
+    favMovie = input("What movie would you like to add to your favourites? ")
+    movie = search(movies, favMovie)
+    if movie != -1:
+        favourites.append(movies[movie])
+        print("Movie added")
+    else:
+        print("Movie not in list.")
+
+def removefav():
+    remfavMovie = input("What movie would you like to remove from your favourites? ")
+    index = search(favourites, remfavMovie)
+    if index != -1:
+        favourites.pop(index)
+        print("Movie removed")
+    else:
+        print("Movie not in list.")
+
+
+def displayfav():
+    print("\nFAVOURITES:")
+    for favourite in favourites:
+        print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
 
 def exit():
     loop = False 
