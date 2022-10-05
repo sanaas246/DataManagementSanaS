@@ -122,6 +122,10 @@ def displayfav():
         print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
 
 def exit():
+    favourites_json = json.dumps(favourites)
+    file = open("favourites.txt", "w")
+    file.write(favourites_json)
+    file.close()
     loop = False 
     print("\nBye!")
 
@@ -168,10 +172,7 @@ while loop:
     else: 
         print("Please choose an option. ")
 
-favourites_json = json.dumps(favourites)
-file = open("favourites.txt", "w")
-file.write(favourites_json)
-file.close()
+
 
 
 
