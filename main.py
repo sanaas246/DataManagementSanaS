@@ -1,6 +1,8 @@
 # MOVIE DATA MANAGEMENT PROJECT - SANA S
 # Pre-existing Users Dictionary (Username, Password)
 
+import json
+
 # DICTIONARIES
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
@@ -26,6 +28,14 @@ movies = [{
 
 # Favourites (Title, Genre, Director)
 favourites = [ ]
+
+# Save to JSON file
+file = open("favourites.txt", "r")
+fav_from_file = file.read()
+file.close()
+
+newFav = json.loads(fav_from_file)
+
 
 # FUNCTIONS
 # Random Functions to Help
@@ -158,8 +168,10 @@ while loop:
     else: 
         print("Please choose an option. ")
 
-
-
+favourites_json = json.dumps(favourites)
+file = open("favourites.txt", "w")
+file.write(favourites_json)
+file.close()
 
 
 
