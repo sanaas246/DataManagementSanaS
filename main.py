@@ -1,9 +1,11 @@
 # MOVIE DATA MANAGEMENT PROJECT - SANA S
-# Pre-existing Users Dictionary (Username, Password)
 
 import json
 
 # DICTIONARIES
+# Users Dictionary (Username, Password)
+users = [{"username": "sanasid", "password": "Meri"} ]
+
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
     "title": "The Conjuring",
@@ -30,14 +32,19 @@ movies = [{
 favourites = [ ]
 
 # Save to JSON file
-file = open("favourites.txt", "r")
-fav_from_file = file.read()
+users_json = json.dumps(users)
+file = open("users.txt", "w")
+file.write(users_json)
 file.close()
 
-newFav = json.loads(fav_from_file)
+file = open("users.txt", "r")
+user_from_file = file.read()
+file.close()
 
+newUser = json.loads(user_from_file)
 
 # FUNCTIONS
+
 # Random Functions to Help
 def bubbleSort(anArray, item):
     for i in range(len(anArray)):
@@ -122,10 +129,11 @@ def displayfav():
         print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
 
 def exit():
-    favourites_json = json.dumps(favourites)
-    file = open("favourites.txt", "w")
-    file.write(favourites_json)
+    users_json = json.dumps(users)
+    file = open("users.txt", "w")
+    file.write(users_json)
     file.close()
+
     loop = False 
     print("\nBye!")
 
@@ -146,34 +154,75 @@ def getMenuSelection():
     return input("\nChoose an option please: ").lower()
 
 # Main Menu
-loop = True
-while loop:
-    selection = getMenuSelection()
+def mainMenu(): 
+    loop = True
+    while loop:
+        selection = getMenuSelection()
 
-    if selection == "1" or selection == "display all data":
-        displayall()
-    elif selection == "2" or selection == "search data":
-        searchmovie()
-    elif selection == "3" or selection == "sort by genre":
-        sortgenre()
-    elif selection == "4" or selection == "add to favourites":
-        addfav()
-    elif selection == "5" or selection == "remove from favourites":
-        removefav()
-    elif selection == "6" or selection == "display favourites":
-        displayfav()
-    elif selection == "7" or selection == "add new movie":
-        add()
-    elif selection == "8" or selection == "remove a movie":
-        remove()
-    elif selection == "9" or selection == "exit":
-        exit()
-        loop = False
-    else: 
-        print("Please choose an option. ")
+        if selection == "1" or selection == "display all data":
+            displayall()
+        elif selection == "2" or selection == "search data":
+            searchmovie()
+        elif selection == "3" or selection == "sort by genre":
+            sortgenre()
+        elif selection == "4" or selection == "add to favourites":
+            addfav()
+        elif selection == "5" or selection == "remove from favourites":
+            removefav()
+        elif selection == "6" or selection == "display favourites":
+            displayfav()
+        elif selection == "7" or selection == "add new movie":
+            add()
+        elif selection == "8" or selection == "remove a movie":
+            remove()
+        elif selection == "9" or selection == "exit":
+            exit()
+            loop = False
+        else: 
+            print("Please choose an option. ")
 
 
+# Function to Register or Login
+def requestInfo():
+    username = input("What would you like your username to be? ")
+    password = input("What would you like your password to be? ")
+    newUser(username,password)
 
+def newUser(username, password):
+    return {
+        "username": username,
+        "password": password,
+        "faves": favourites
+    }
+
+def findUP(uorp, item):
+    for i in range(len(users)):
+        if users[i][uorp] == item:
+            return i
+    return -1
+
+def login():
+    user = input("Username: ")
+    foundUser = findUP("username", user)
+    if foundUser != -1:
+        passw = input("Password: ")
+        foundPass = findUP("password", passw)
+        if foundPass != -1:
+            mainMenu()
+        else:
+            print("Wrong Password!")
+            login()
+    else:
+        print("No account found. Please register.")
+        requestInfo()
+
+# Register or Login User
+rorl = input("Would you like to register or login? ")
+if rorl == "login":
+    login()
+elif rorl == "register":
+    requestInfo()
+    mainMenu()
 
 
 
