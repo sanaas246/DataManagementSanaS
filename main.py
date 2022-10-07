@@ -110,6 +110,11 @@ def addfav():
     if movie != -1:
         favourites.append(movies[movie])
         print("Movie added")
+
+        users_json = json.dumps(users)
+        file = open("users.txt", "w")
+        file.write(users_json)
+        file.close()
     else:
         print("Movie not in list.")
 
@@ -118,6 +123,11 @@ def removefav():
     index = search(favourites, remfavMovie)
     if index != -1:
         favourites.pop(index)
+
+        users_json = json.dumps(users)
+        file = open("users.txt", "w")
+        file.write(users_json)
+        file.close()
         print("Movie removed")
     else:
         print("Movie not in list.")
@@ -149,7 +159,7 @@ def getMenuSelection():
     print("6. Display favourites")
     print("7. Add new movie")
     print("8. Remove a movie")
-    print("9. Exit")
+    print("9. Logout")
 
     return input("\nChoose an option please: ").lower()
 
@@ -175,7 +185,7 @@ def mainMenu():
             add()
         elif selection == "8" or selection == "remove a movie":
             remove()
-        elif selection == "9" or selection == "exit":
+        elif selection == "9" or selection == "logout":
             exit()
             loop = False
         else: 
@@ -192,7 +202,7 @@ def newUser(username, password):
     return {
         "username": username,
         "password": password,
-        "faves": favourites
+        "faves": [ ]
     }
 
 def findUP(uorp, item):
