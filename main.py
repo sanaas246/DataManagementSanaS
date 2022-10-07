@@ -5,6 +5,7 @@ import json
 # DICTIONARIES
 # Users Dictionary (Username, Password)
 users = [{"username": "sanasid", "password": "Meri"} ]
+foundUser = 0
 
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
@@ -107,8 +108,9 @@ def remove():
 def addfav():
     favMovie = input("What movie would you like to add to your favourites? ")
     movie = search(movies, favMovie)
+    print(foundUser)
     if movie != -1:
-        favourites.append(movies[movie])
+        users[foundUser].append(movies[movie])
         print("Movie added")
 
         users_json = json.dumps(users)
@@ -235,5 +237,8 @@ elif rorl == "register":
     mainMenu()
 
 
-
+# first go into the login function and record the index of the user 
+# being used at that moment, then in the addfav function, instead of 
+# using favourites.append... use users[favourite].append so that the
+# specific user gets the new favourite
 
