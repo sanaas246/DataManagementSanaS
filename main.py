@@ -4,8 +4,7 @@ import json
 
 # DICTIONARIES
 # Users Dictionary (Username, Password)
-users = [{"username": "sanasid", "password": "Meri"} ]
-foundUser = 0
+# foundUser = 0
 
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
@@ -32,19 +31,33 @@ movies = [{
 # Favourites (Title, Genre, Director)
 favourites = [ ]
 
-# Save to JSON file
-users_json = json.dumps(users)
-file = open("users.txt", "w")
-file.write(users_json)
-file.close()
-
 file = open("users.txt", "r")
 user_from_file = file.read()
 file.close()
 
-newUser = json.loads(user_from_file)
+users = json.loads(user_from_file)
+print(users)
 
 # FUNCTIONS
+# Login 
+foundUser = 0
+def login():
+    print("\n*****LOGIN MENU*****")
+    user = input("Username: ")
+    foundUser = findUP("username", user)
+    if foundUser != -1:
+        passw = input("Password: ")
+        foundPass = findUP("password", passw)
+        if foundPass != -1:
+            mainMenu()
+        else:
+            print("Wrong Password!")
+            login()
+    else:
+        print("No account found. Please register.")
+        requestInfo()
+        mainMenu()
+
 
 # Random Functions to Help
 def bubbleSort(anArray, item):
@@ -84,7 +97,7 @@ def sortgenre():
 def add():
     newtitle = input("What is the title of this movie? ")
     searching = search(movies, newtitle)
-    if searching != -1:
+    if searching == -1:
         newgenre = input("What is the genre for this movie? ")
         newdir = input("What is the director for this movie? ")
         print("Movie Added")
@@ -99,18 +112,18 @@ def add():
 
 def remove():
     removemov = input("What is the name of the movie you would like to delete? ")
-    index = search(removemov)
+    index = search(movies, removemov)
     if index != -1:
-        del movies[index]
+        movies.pop(index)
+        print("Movie deleted.")
     else:
         print("Movie not found")
 
 def addfav():
     favMovie = input("What movie would you like to add to your favourites? ")
     movie = search(movies, favMovie)
-    print(foundUser)
     if movie != -1:
-        users[foundUser].append(movies[movie])
+        users[foundUser]["faves"].append(movies[movie])
         print("Movie added")
 
         users_json = json.dumps(users)
@@ -122,9 +135,9 @@ def addfav():
 
 def removefav():
     remfavMovie = input("What movie would you like to remove from your favourites? ")
-    index = search(favourites, remfavMovie)
+    index = search(users[foundUser]["faves"], remfavMovie)
     if index != -1:
-        favourites.pop(index)
+        users[foundUser]["faves"].pop(index)
 
         users_json = json.dumps(users)
         file = open("users.txt", "w")
@@ -137,7 +150,7 @@ def removefav():
 
 def displayfav():
     print("\nFAVOURITES:")
-    for favourite in favourites:
+    for favourite in users[foundUser]["faves"]:
         print("\nTitle: ", favourite["title"], "\nGenre: ", favourite["genre"], "\nDirector: ", favourite["director"])
 
 def exit():
@@ -146,8 +159,7 @@ def exit():
     file.write(users_json)
     file.close()
 
-    loop = False 
-    print("\nBye!")
+    login()
 
 # Menu Options 
 def getMenuSelection():
@@ -198,7 +210,7 @@ def mainMenu():
 def requestInfo():
     username = input("What would you like your username to be? ")
     password = input("What would you like your password to be? ")
-    newUser(username,password)
+    users.append(newUser(username,password))
 
 def newUser(username, password):
     return {
@@ -207,26 +219,11 @@ def newUser(username, password):
         "faves": [ ]
     }
 
-def findUP(uorp, item):
+def findUP(uorp, item): # find username and password
     for i in range(len(users)):
         if users[i][uorp] == item:
             return i
     return -1
-
-def login():
-    user = input("Username: ")
-    foundUser = findUP("username", user)
-    if foundUser != -1:
-        passw = input("Password: ")
-        foundPass = findUP("password", passw)
-        if foundPass != -1:
-            mainMenu()
-        else:
-            print("Wrong Password!")
-            login()
-    else:
-        print("No account found. Please register.")
-        requestInfo()
 
 # Register or Login User
 rorl = input("Would you like to register or login? ")
@@ -234,11 +231,9 @@ if rorl == "login":
     login()
 elif rorl == "register":
     requestInfo()
-    mainMenu()
+    print("Great! Go ahead and login now.")
+    login()
 
 
-# first go into the login function and record the index of the user 
-# being used at that moment, then in the addfav function, instead of 
-# using favourites.append... use users[favourite].append so that the
-# specific user gets the new favourite
-
+# Things to do 
+# add - already e

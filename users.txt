@@ -1,1 +1,1 @@
-[{"username": "sanasid", "password": "Meri"}]
+[{"username": "sana", "password": "sid", "faves": [{"title": "Insidious", "genre": "Horror", "director": "James Wan"}, {"title": "The Conjuring", "genre": "Horror", "director": "James Wan"}]}, {"username": "sana", "password": "sid", "faves": []}, {"username": "yucca", "password": "cat", "faves": []}]
