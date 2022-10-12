@@ -3,9 +3,6 @@
 import json
 
 # DICTIONARIES
-# Users Dictionary (Username, Password)
-foundUser = 0
-
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
     "title": "The Conjuring",
@@ -31,12 +28,13 @@ movies = [{
 # Favourites (Title, Genre, Director)
 favourites = [ ]
 
+# Save favourites using JSON
 file = open("users.txt", "r")
 user_from_file = file.read()
 file.close()
 
 users = json.loads(user_from_file)
-print(users)
+
 
 # FUNCTIONS
 # Login 
@@ -59,7 +57,7 @@ def login():
         mainMenu()
 
 
-# Random Functions to Help
+# Other Functions to Help
 def bubbleSort(anArray, item):
     for i in range(len(anArray)):
         for nums in range(0, len(anArray) - i - 1):
@@ -132,8 +130,7 @@ def addfav():
         file.write(users_json)
         file.close()
     else:
-        print("Movie can not be added to the list. Check if it is already in favourites or if it is not in your general movies list.")
-
+        print("\nMovie can not be added to the list. Check if it is already in favourites or if it is not in your general movies list.")
 
 def removefav():
     remfavMovie = input("What movie would you like to remove from your favourites? ")
@@ -150,7 +147,6 @@ def removefav():
     else:
         print("Movie not in list.")
 
-
 def displayfav():
     print("\nFAVOURITES:")
     for favourite in users[foundUser]["faves"]:
@@ -162,6 +158,7 @@ def exit():
     file.write(users_json)
     file.close()
 
+    print("Bye!")
     login()
 
 # Menu Options 
@@ -209,9 +206,9 @@ def mainMenu():
             print("Please choose an option. ")
 
 
-# Function to Register or Login
+# Functions to Register or Login
 def requestInfo():
-    username = input("What would you like your username to be? ")
+    username = input("\nWhat would you like your username to be? ")
     password = input("What would you like your password to be? ")
     users.append(newUser(username,password))
 
@@ -222,6 +219,7 @@ def newUser(username, password):
         "faves": [ ]
     }
 
+# Find the username or password
 def findUP(uorp, item): # find username and password
     for i in range(len(users)):
         if users[i][uorp] == item:
@@ -237,6 +235,3 @@ elif rorl == "register":
     print("Great! Go ahead and login now.")
     login()
 
-
-# Things to do 
-# add,addfav - already existing
