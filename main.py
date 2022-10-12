@@ -122,6 +122,8 @@ def remove():
 def addfav():
     favMovie = input("What movie would you like to add to your favourites? ")
     movie = search(movies, favMovie)
+    # present = search(users[foundUser]["faves"], favMovie)
+    # if present != -1:
     if movie != -1:
         users[foundUser]["faves"].append(movies[movie])
         print("Movie added")
@@ -132,6 +134,9 @@ def addfav():
         file.close()
     else:
         print("Movie not in list.")
+    # else:
+    #     print("Movie already in list.")
+    #     pass 
 
 def removefav():
     remfavMovie = input("What movie would you like to remove from your favourites? ")
@@ -236,4 +241,4 @@ elif rorl == "register":
 
 
 # Things to do 
-# add - already e
+# add,addfav - already existing
