@@ -4,7 +4,7 @@ import json
 
 # DICTIONARIES
 # Users Dictionary (Username, Password)
-# foundUser = 0
+foundUser = 0
 
 # Movie Dictionary (Title, Genre, Director)
 movies = [{
@@ -122,9 +122,8 @@ def remove():
 def addfav():
     favMovie = input("What movie would you like to add to your favourites? ")
     movie = search(movies, favMovie)
-    # present = search(users[foundUser]["faves"], favMovie)
-    # if present != -1:
-    if movie != -1:
+    alrMovie = search(users[foundUser]["faves"], favMovie)
+    if movie != -1 and alrMovie == 1:
         users[foundUser]["faves"].append(movies[movie])
         print("Movie added")
 
@@ -133,10 +132,8 @@ def addfav():
         file.write(users_json)
         file.close()
     else:
-        print("Movie not in list.")
-    # else:
-    #     print("Movie already in list.")
-    #     pass 
+        print("Movie can not be added to the list. Check if it is already in favourites or if it is not in your general movies list.")
+
 
 def removefav():
     remfavMovie = input("What movie would you like to remove from your favourites? ")
@@ -148,6 +145,7 @@ def removefav():
         file = open("users.txt", "w")
         file.write(users_json)
         file.close()
+
         print("Movie removed")
     else:
         print("Movie not in list.")

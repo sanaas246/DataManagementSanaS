@@ -1,1 +1,1 @@
-[{"username": "sana", "password": "sid", "faves": []}]
+[{"username": "sana", "password": "sid", "faves": [{"title": "Heathers", "genre": "Drama", "director": "Michael Lehmann"}, {"title": "The Conjuring", "genre": "Horror", "director": "James Wan"}]}]
