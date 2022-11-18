@@ -56,7 +56,6 @@ def login():
         requestInfo()
         mainMenu()
 
-
 # Other Functions to Help
 def bubbleSort(anArray, item):
     for i in range(len(anArray)):
@@ -161,6 +160,8 @@ def exit():
     print("Bye!")
     login()
 
+
+# MAIN MENU
 # Menu Options 
 def getMenuSelection():
     # Menu Options
@@ -206,7 +207,8 @@ def mainMenu():
             print("Please choose an option. ")
 
 
-# Functions to Register or Login
+# LOGIN/LOGOUT
+# Request registration info
 def requestInfo():
     username = input("\nWhat would you like your username to be? ")
     password = input("What would you like your password to be? ")
@@ -220,7 +222,7 @@ def newUser(username, password):
     }
 
 # Find the username or password
-def findUP(uorp, item): # find username and password
+def findUP(uorp, item): 
     for i in range(len(users)):
         if users[i][uorp] == item:
             return i
