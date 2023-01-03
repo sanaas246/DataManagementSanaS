@@ -158,7 +158,6 @@ def exit():
     file.close()
 
     print("Bye!")
-    login()
 
 
 # MAIN MENU
